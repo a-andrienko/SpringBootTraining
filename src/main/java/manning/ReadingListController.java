@@ -10,19 +10,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Controller
-@RequestMapping("/readingList")
+@RequestMapping("/")
 public class ReadingListController {
+
+    private ReadingListRepository readingListRepository;
 
     @Autowired
     public ReadingListController(ReadingListRepository readingListRepository) {
         this.readingListRepository = readingListRepository;
     }
 
-    private ReadingListRepository readingListRepository;
-
     @RequestMapping(value="/{reader}", method=RequestMethod.GET)
-    public String readersBooks(@PathVariable("reader") final String reader, final Model model) {
-        final List<Book> readingList = readingListRepository.findByReader(reader);
+    public String readersBooks(
+            @PathVariable("reader") String reader,
+            Model model) {
+
+        List<Book> readingList =
+                readingListRepository.findByReader(reader);
         if (readingList != null) {
             model.addAttribute("books", readingList);
         }
@@ -30,9 +34,10 @@ public class ReadingListController {
     }
 
     @RequestMapping(value="/{reader}", method=RequestMethod.POST)
-    public String addToReadinglist(@PathVariable("reader") final String reader, final Book book) {
+    public String addToReadinglist(
+            @PathVariable("reader") String reader, Book book) {
         book.setReader(reader);
         readingListRepository.save(book);
-        return "redirect:/readingList/{reader}";
+        return "redirect:/{reader}";
     }
 }
