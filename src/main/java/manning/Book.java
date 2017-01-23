@@ -5,15 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * Created by owlda on 22.01.2017.
- */
-
 @Entity
 public class Book {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
     private String reader;
     private String isbn;
     private String title;
@@ -60,7 +57,7 @@ public class Book {
         this.description = description;
     }
 
-    public long getId() {
+    public Long getId() {
 
         return id;
     }
